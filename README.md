@@ -17,6 +17,17 @@ Steps to Run Application:
 6) Change "MailApiUrl" value to path of the Rest api. Example:'http://localhost:22359/api'. Save and close file.
 7) Now you can run this project using 'ng serve -o' command from terminal.
 
+Email ids to test:
+anand.kawatekar@gmail.com
+sanjota.k@gmail.com
+sadanand.k@gmail.com
+testmail@gmail.com
+manju.t@gmail.com
+uma.k@gmail.com
+sujata.t@gmail.com
+preetam@gmail.com
+aravind.k@gmail.com
+
 
 
 
