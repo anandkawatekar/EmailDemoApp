@@ -1,0 +1,11 @@
+#content{
+  display: flex;
+  align-items: stretch;
+}
+
+.content-div {
+  padding: 10px;
+  min-height: 100vh;
+
+  align-items: stretch;
+}

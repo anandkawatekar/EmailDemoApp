@@ -1,0 +1,32 @@
+<div class="card">
+<div class="card-header">
+  <div>
+    <h5>Subject: {{mailMessage.Subject}}</h5>
+  </div>
+    <div class="d-flex justify-content-between align-items-baseline">
+        <h6 class="mb-1">From: {{ mailMessage.FromEmail }}
+            <small></small>
+        </h6>
+
+        <small class="text-dark">{{ mailMessage.MailDate | date:'dd-MMM-yyyy' }}</small>
+    </div>
+    <h6 class="mb-1">To: {{ mailMessage.ToEmail }}
+        <small></small>
+    </h6>
+</div>
+<div class="card-body">
+  <p class="card-text text-style">{{mailMessage.Message}}</p>
+</div>
+<div class="col-md-5">
+<small *ngIf ="mailMessage.AttachmentsList" >ATTACHMENTS:</small>
+  <ul Id="attachmentList" class="" *ngFor="let arrayItem of mailMessage.AttachmentsList">
+      <li class="">
+        <a class="small" (click)="onDownloadAttachment(arrayItem.AttachmentId)" >{{arrayItem.Attachment}} </a>
+      </li>
+    </ul>
+</div>
+<div class="card-footer">
+    <button type="submit" class=" btn btn-md col-sm-1 btn-default" (click)="replyMail()">Reply</button> &nbsp;&nbsp;
+    <button type="submit" class=" btn btn-md col-sm-1 btn-default" (click)="forwardMail()">Forward</button>
+</div>
+</div>

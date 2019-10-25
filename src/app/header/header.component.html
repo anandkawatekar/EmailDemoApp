@@ -1,0 +1,9 @@
+<header class="border-bottom d-flex justify-content-between align-items-baseline" *ngIf="loginUser | async as user">
+    <div class="">
+        <h5 class="text-info">Welcome : {{user?.FirstName}} {{user?.LastName}}</h5>
+    </div>
+    <div class="">
+        <button  class="btn btn-sm btn-outline-secondary" (click)="onLogout()">Logout</button>
+      </div>
+</header>
+

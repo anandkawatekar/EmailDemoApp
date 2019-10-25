@@ -1,0 +1,20 @@
+<nav id="sidebar"  *ngIf="loginUser | async as user">
+  <div class="sidebar-header">
+      <h3>My Mail</h3>
+      <button type="button" id="btnCompose" class="btn btn-default" routerLink="/compose">COMPOSE</button>
+  </div>
+  <ul class="nav flex-column ">
+    <li routerLinkActive="active">
+      <a class="nav-link" routerLink="/inbox">Inbox</a>
+    </li>
+    <li routerLinkActive="active">
+      <a class="nav-link" routerLink="/sent">Sent</a>
+    </li>
+    <li routerLinkActive="active">
+      <a class="nav-link" routerLink="/draft">Drafts</a>
+    </li>
+    <li routerLinkActive="active">
+      <a class="nav-link" routerLink="/trash">Trash</a>
+    </li>
+  </ul>
+</nav>

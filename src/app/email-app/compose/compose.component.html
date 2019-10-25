@@ -1,0 +1,71 @@
+<div class="border-bottom">
+  <h5>Compose a New Mail:</h5>
+</div>
+<div class="form-groups">
+  <form [formGroup]="mailMessageForm" (ngSubmit)="onSubmit()" >
+
+    <div class="form-group row">
+      <input class="form-control" type="hidden" formControlName="MailId">
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <label class="control-label">To:</label>
+      </div>
+      <div class="col-md">
+          <input #ToEmail (keyup)="onToMailChange()" class="form-control" type="text" formControlName="ToEmail" [ngClass]="{ 'is-invalid': (submitted || f.ToEmail.dirty || f.ToEmail.touched) && f.ToEmail.errors }" required>
+          <div *ngIf="(submitted || f.ToEmail.dirty || f.ToEmail.touched) && f.ToEmail.errors" class="invalid-feedback">
+              <div *ngIf="f.ToEmail.errors.required">To email is required</div>
+              <div *ngIf="f.ToEmail.errors.pattern">The email address must contain at least the @ character</div>
+          </div>
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <label class="control-label">Subject:</label>
+      </div>
+      <div class="col-md">
+          <input (keyup)="onSubjectChange()" class="form-control" type="text" formControlName="Subject"  >
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-1">
+          <label class="control-label">Message:</label>
+        </div>
+        <div class="col-md">
+            <textarea #Message (keyup)="onMessageChange()" rows="7" class="form-control text-style" type="text" formControlName="Message" ></textarea>
+
+        </div>
+      </div>
+<div class="form-group row">
+    <app-file-upload (onFileUploadSuccess)="onFileUploadComplete($event)"></app-file-upload>
+    <div class="col-md-1">
+        <label class="control-label">Attachments:</label>
+      </div>
+      <div class="col-md-2">
+          <button type="button" class=" btn btn-sm col-sm-2 btn-info" (click)="uploadFile()">
+              <i class="fa fa-paperclip"></i>
+            </button>
+      </div>
+      <div formArrayName="AttachmentsList" *ngFor="let arrayItem of mailMessageForm.controls.AttachmentsList?.value; let i = index">
+          <a class="small">{{arrayItem.Attachment}} </a>
+          <button type="button" class="close" aria-label="Remove" (click)="onRemoveAttachment(arrayItem.AttachmentId,i)">
+            <i aria-hidden="true" class="text-danger">&times;</i>
+            </button>
+      </div>
+</div>
+
+
+  <div class="form-group" style="text-align:center">
+    <button type="submit" class=" btn btn-md col-sm-4 btn-success">
+        <i class="fa fa-floppy-o"></i> Send</button> &nbsp;&nbsp;
+    <button type="button" class=" btn btn-md col-sm-4 btn-danger" (click)="clearControls()">
+        <i class="fa fa-remove"></i> Discard</button>
+  </div>
+</form>
+</div>
+

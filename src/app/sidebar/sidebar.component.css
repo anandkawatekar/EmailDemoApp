@@ -1,0 +1,44 @@
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background-color: dimgray;
+  color: #fff;
+  height: 100%;
+}
+
+
+#sidebar ul li a {
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 20px;
+}
+
+#sidebar ul li a:hover {
+  color: blue;
+  background: #fff;
+}
+
+#sidebar ul li.active{
+  color: whitesmoke;
+  background: lightslategray;
+}
+
+#sidebar .sidebar-header {
+  padding: 10px;
+  border-bottom: 1px solid;
+  text-align: center;
+}
+
+#btnCompose {
+  background-color:  indianred;
+  color: white;
+  padding: 12px 0;
+  text-align: center;
+  width: 100%;
+}
+#btnCompose:hover {
+  background-color:  rgb(190, 70, 70);
+  color: darkgray;
+}
+
+

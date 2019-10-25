@@ -1,0 +1,28 @@
+<div class="border-bottom">
+    <div>
+      <h4>Draft:</h4>
+    </div>
+    <div *ngIf="!messagesList" class="text-center text-info align-middle">
+      <h5>No draft mails!</h5>
+    </div>
+</div>
+
+<div *ngIf="messagesList" class="table-scrollbar">
+    <table id="tblEmails" class="table table-hover bg-white">
+        <tbody>
+            <ng-container *ngFor="let email of messagesList">
+                <tr>
+                    <td (click)="onRead(email)" class="mail-from">{{ utils.trimEmailTo(email.ToEmail) }}</td>
+                    <td (click)="onRead(email)" class="mail-subject">{{ utils.trimEmailSubject(email.Subject) }}</td>
+                    <td (click)="onRead(email)" class="mail-date">{{ email.MailDate | date:'dd-MMM-yyyy' }}</td>
+                    <td class="mail-action" style="padding:0;vertical-align: middle;">
+                        <a  class="btn btn-sm text-danger" (click)="onTrash(email.MailId)">
+                            <i class="fa fa-trash-o fa-2x"></i>
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
