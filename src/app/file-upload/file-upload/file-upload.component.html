@@ -4,7 +4,7 @@
  <h3 class="text-center text-info">
     <u>Select file to attach</u>
   </h3>
-
+<span>Note: Max file size allowed is 1MB.</span>
   <br/>
   <input type="file" class=" btn btn-default" (change)="onFileChange($event)" />
   <br/>
@@ -20,7 +20,7 @@
   </div>
   <br/>
   <div *ngIf="messages">
-    <span> {{msg}} </span>
+    <span class="text-danger"> {{messages}} </span>
   </div>
 </div>
 </div>

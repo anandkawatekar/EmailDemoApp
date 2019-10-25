@@ -30,9 +30,18 @@ export class FileUploadComponent implements OnInit {
 
   onFileChange(event) {
     this.fileToUpload = null;
-    if (event.target.files) {
+    this.messages = "";
+    if (event.target.files &&
+        event.target.files.length > 0) {
+      // Don't allow file sizes over 1MB
+      if (event.target.files[0].size < this.MAX_SIZE) {
+        // Set theFile property
         this.fileToUpload = event.target.files[0];
       }
+      else { // Display error message
+        this.messages ="File: " + event.target.files[0].name  + " is too large to upload.";
+      }
+    }
   }
 
   uploadFile(): void {
