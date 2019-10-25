@@ -164,9 +164,7 @@ onSubjectChange() {
   let oldValue = this.f.Subject.value;
   setTimeout(() => {
       if (oldValue == this.f.Subject.value) {
-          if (this.f.Subject.value) {  //check blank value
              this.saveDraft();
-          }
       }
   }, 3000);
 }
@@ -175,9 +173,7 @@ onMessageChange() {
   let oldValue = this.f.Message.value;
   setTimeout(() => {
       if (oldValue == this.f.Message.value) {
-          if (this.f.Message.value) {  //check blank value
              this.saveDraft();
-          }
       }
   }, 3000);
 }
@@ -189,7 +185,10 @@ saveDraft()
   this.mailService.SaveDraft(requestData.MailId,requestData)
       .subscribe(
         data => {
-              this.f.MailId.setValue(data);
+              this.mailMsg = data;
+              this.buildFormControlsFromModel();
+              this.setValidation();
+              //this.f.MailId.setValue(data);
         }
       );
 

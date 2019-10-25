@@ -54,13 +54,13 @@ export class MailService {
     return this.http.post<MailResponse>(this.apiUrl, body,httpOptions);
   }
 
-  SaveDraft(id:number, objMail: MailMessage) : Observable<number>{
+  SaveDraft(id:number, objMail: MailMessage) : Observable<MailMessage>{
     const body = JSON.stringify(objMail);
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Agent' }),
       ResponseType: 'json'
     };
-    return this.http.post<number>(`${this.apiUrl}/${id}`, body,httpOptions);
+    return this.http.put<MailMessage>(`${this.apiUrl}/${id}`, body,httpOptions);
   }
 
   DoTrash(id:number) : Observable<boolean>{

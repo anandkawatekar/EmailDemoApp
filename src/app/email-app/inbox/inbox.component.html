@@ -1,11 +1,11 @@
 <div class="border-bottom">
   <div><h4>Inbox:</h4></div>
-  <div *ngIf="!messagesList" class="text-center text-info align-middle">
+  <div *ngIf="!messagesList.length>0" class="text-center text-muted align-middle">
     <h5>No emails in your inbox!</h5>
   </div>
 </div>
 
-<div *ngIf="messagesList" class="table-scrollbar">
+<div *ngIf="messagesList.length>0" class="table-scrollbar">
     <table id="tblEmails" class="table table-hover bg-white">
         <tbody >
             <ng-container *ngFor="let email of messagesList" >

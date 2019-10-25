@@ -17,8 +17,8 @@
 <div class="card-body">
   <p class="card-text text-style">{{mailMessage.Message}}</p>
 </div>
-<div class="col-md-5">
-<small *ngIf ="mailMessage.AttachmentsList" >ATTACHMENTS:</small>
+<div class="card-footer">
+<small *ngIf ="mailMessage.AttachmentsList.length>0" >ATTACHMENTS:</small>
   <ul Id="attachmentList" class="" *ngFor="let arrayItem of mailMessage.AttachmentsList">
       <li class="">
         <a class="small" (click)="onDownloadAttachment(arrayItem.AttachmentId)" >{{arrayItem.Attachment}} </a>
@@ -26,7 +26,8 @@
     </ul>
 </div>
 <div class="card-footer">
-    <button type="submit" class=" btn btn-md col-sm-1 btn-default" (click)="replyMail()">Reply</button> &nbsp;&nbsp;
-    <button type="submit" class=" btn btn-md col-sm-1 btn-default" (click)="forwardMail()">Forward</button>
+    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="replyMail()">Reply</button> &nbsp;&nbsp;
+    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="forwardMail()">Forward</button> &nbsp;&nbsp;
+    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="onBack()">Go Back</button>
 </div>
 </div>

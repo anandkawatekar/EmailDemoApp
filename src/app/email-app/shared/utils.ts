@@ -15,7 +15,7 @@ export class Utils {
     else if(senderName.length==0)
       return "[No Email Id]";
     else
-      return senderName;
+      return 'From: '+senderName;
   }
 
   public trimEmailTo(receiverName) {

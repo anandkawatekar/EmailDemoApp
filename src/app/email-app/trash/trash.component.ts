@@ -45,7 +45,8 @@ export class TrashComponent implements OnInit {
             this.mailService.DeleteMail(id)
                   .subscribe(
                       data => {
-                          alert("Mail deleted successfully.")
+                          this.loadTrashMails();
+                          alert("Mail deleted successfully.");
                       },
                       (err: HttpErrorResponse) => {
                             if (err.error instanceof Error) {

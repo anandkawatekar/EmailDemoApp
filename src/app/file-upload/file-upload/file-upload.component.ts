@@ -64,7 +64,6 @@ export class FileUploadComponent implements OnInit {
       this.uploadService.uploadFile(file)
         .subscribe(resp =>
           {
-            alert("Resp"+resp);
             const mailAttach = new MailAttachment();
             mailAttach.AttachmentId = resp;
             mailAttach.Attachment = file.FileName;

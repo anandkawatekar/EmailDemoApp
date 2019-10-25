@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { MailAttachment } from 'src/app/models/mail-attachment.model';
 
 @Component({
   selector: 'app-read-mail',
@@ -74,8 +75,18 @@ export class ReadMailComponent implements OnInit {
      composeMessage.Subject = 'Fr:' + this.mailMessage.Subject;
 
       composeMessage.ToEmail = '';
-      composeMessage.AttachmentsList = this.mailMessage.AttachmentsList;
       composeMessage.IsAttachmentPresent = this.mailMessage.IsAttachmentPresent;
+
+
+      this.mailMessage.AttachmentsList.forEach( x=>{
+       let  atch: MailAttachment = new MailAttachment();
+        atch.MailId = -1;
+        atch.AttachmentId = x.AttachmentId;
+        atch.Attachment = x.Attachment;
+        composeMessage.AttachmentsList.push(atch);
+      });
+
+      composeMessage.AttachmentsList = this.mailMessage.AttachmentsList;
 
        //format messaage prefix
        composeMessage.Message = `
@@ -90,6 +101,7 @@ To: ${this.mailMessage.ToEmail}
 
   }
 
+
   replyMail()
   {
      const composeMessage = new MailMessage();
@@ -98,9 +110,6 @@ To: ${this.mailMessage.ToEmail}
         composeMessage.ToEmail = this.mailMessage.FromEmail;
      else
         composeMessage.ToEmail = this.mailMessage.ToEmail;
-
-     composeMessage.AttachmentsList = this.mailMessage.AttachmentsList;
-     composeMessage.IsAttachmentPresent = this.mailMessage.IsAttachmentPresent;
 
        //format messaage prefix
      composeMessage.Message = `
@@ -113,11 +122,17 @@ To: ${this.mailMessage.ToEmail}
 
   }
 
+
   onDownloadAttachment(attachmentId:number)
   {
     var filePath = environment.MailApiUrl+'/FileUpload/'+attachmentId;
     window.open(filePath);
 
+  }
+
+  onBack()
+  {
+    this.location.back();
   }
 
 }
