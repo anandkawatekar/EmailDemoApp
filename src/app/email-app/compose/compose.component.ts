@@ -11,7 +11,7 @@ import { LoginResponse } from 'src/app/models/login-response.model';
 import { FileUploadService } from 'src/app/file-upload/shared/file-upload.service';
 import { MailAttachment } from 'src/app/models/mail-attachment.model';
 import { UserAccount } from 'src/app/models/user-account.model';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-compose',
@@ -26,7 +26,11 @@ export class ComposeComponent implements OnInit {
   issaved = false;
   public mailMsg:MailMessage;
   public mailResp: MailResponse;
-  constructor(private frmBuilder: FormBuilder,private location: Location,private route: ActivatedRoute,private router: Router,private mailService: MailService,private fileuploadService: FileUploadService,private utils: Utils) {
+
+  constructor(
+      private frmBuilder: FormBuilder,private location: Location,private route: ActivatedRoute,
+      private router: Router,private mailService: MailService,private fileuploadService: FileUploadService,
+      private utils: Utils,private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -55,8 +59,6 @@ export class ComposeComponent implements OnInit {
 
     this.buildFormControlsFromModel();
     this.setValidation();
-    this.myToMail.nativeElement.focus();
-
   }
 
 buildFormControlsFromModel()
@@ -110,11 +112,27 @@ setValidation()
 }
 
 clearControls(){
+  const requestData: MailMessage = Object.assign({}, this.mailMessageForm.value);
+  if(requestData.MailId>0)
+  {
+     this.mailService.DoTrash(requestData.MailId)
+    .subscribe(
+        data => {
+           this.toastr.success('Mail moved to trash folder.');
+        }
+    );
+  }
+
   this.mailMessageForm.reset(new MailMessage());
   this.buildFormControlsFromModel();
   this.setValidation();
   this.location.back();
   //this.router.navigate(['/inbox']);
+}
+
+onBack()
+{
+  this.location.back();
 }
 
 onSubmit()
@@ -134,16 +152,7 @@ onSubmit()
         data => {
               this.mailResp =data;
               this.clearControls();
-              alert('Mail sent successfully.');
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            //A client-side or network error occurred.
-            alert('An error occurred: ' + err.error.message);
-          }
-          else {
-              alert(err.status+' Server error occured, try again after some time.');
-            }
+              this.toastr.success('Mail sent successfully.');
         }
       );
 
@@ -205,14 +214,8 @@ loadMail(mailId:number): void {
       this.myToMail.nativeElement.focus();
 
     },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        //A client-side or network error occurred.
-        alert('An error occurred: ' + err.error.message);
-      }
-      else {
-          alert(err.status+' Server error occured, try again after some time.');
-      }
+    err => {
+      this.toastr.error(err.message);
       this.location.back();
     }
   );
@@ -247,16 +250,7 @@ loadMail(mailId:number): void {
   .subscribe(
     data => {
       this.detachAttachment(idx);
-      alert('Attachment removed.');
-    },
-    (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-        //A client-side or network error occurred.
-        alert('An error occurred: ' + err.error.message);
-      }
-      else {
-          alert(err.status+' Server error occured, try again after some time.');
-      }
+      this.toastr.success('Attachment removed.');
     }
   );
   }

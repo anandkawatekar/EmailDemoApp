@@ -26,8 +26,11 @@
     </ul>
 </div>
 <div class="card-footer">
-    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="replyMail()">Reply</button> &nbsp;&nbsp;
-    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="forwardMail()">Forward</button> &nbsp;&nbsp;
-    <button type="button" class=" btn btn-md col-sm-1 btn-default" (click)="onBack()">Go Back</button>
+    <button type="button" class=" btn btn-md col-sm-2 btn-info" (click)="replyMail()">
+        <i class="fa fa-reply"></i> Reply</button> &nbsp;&nbsp;
+    <button type="button" class=" btn btn-md col-sm-2 btn-info" (click)="forwardMail()">
+        <i class="fa fa-share"></i> Forward</button> &nbsp;&nbsp;
+    <button type="button" class=" btn btn-md col-sm-2 btn-danger" (click)="onBack()">
+        <i class="fa fa-backward"></i> Go Back</button>
 </div>
 </div>

@@ -3,8 +3,8 @@ import { Utils } from '../shared/utils';
 import { MailMessage } from '../../models/mail-message.model';
 import { MailService } from '../shared/mail.service';
 import { LoginResponse } from 'src/app/models/login-response.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sent',
@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./sent.component.css']
 })
 export class SentComponent implements OnInit {
-  public messagesList: MailMessage[];
-  constructor(private mailService: MailService,private router: Router,private utils: Utils) { }
+  public messagesList: MailMessage[] = [];
+  constructor(private mailService: MailService,private router: Router,private utils: Utils,private toastr: ToastrService) { }
 
   ngOnInit() {
       this.loadSentMails();
@@ -26,15 +26,6 @@ export class SentComponent implements OnInit {
       .subscribe(
         data => {
               this.messagesList =data;
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            //A client-side or network error occurred.
-            alert('An error occurred: ' + err.error.message);
-          }
-          else {
-              alert(err.status+' Server error occured, try again after some time.');
-            }
         }
       );
     }
@@ -46,16 +37,7 @@ export class SentComponent implements OnInit {
                   .subscribe(
                       data => {
                         this.loadSentMails();
-                          alert("Mail moved to trash folder successfully")
-                      },
-                      (err: HttpErrorResponse) => {
-                            if (err.error instanceof Error) {
-                            //A client-side or network error occurred.
-                            alert('An error occurred: ' + err.error.message);
-                            }
-                            else {
-                                alert(err.status+' Server error occured, try again after some time.');
-                            }
+                        this.toastr.success('Mail moved to trash folder successfully');
                       }
                   );
           }

@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FileUploadService } from '../shared/file-upload.service';
 import { FileToUpload } from '../shared/file-to-upload.model';
 import { MailAttachment } from 'src/app/models/mail-attachment.model';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-file-upload',
@@ -19,7 +21,7 @@ export class FileUploadComponent implements OnInit {
   messages: string = '';
   MAX_SIZE: number = 1048576;
 
-  constructor(private uploadService: FileUploadService) { }
+  constructor(private uploadService: FileUploadService,private toastr: ToastrService) { }
 
   ngOnInit() {
     this.uploadService.loaderState
@@ -47,7 +49,7 @@ export class FileUploadComponent implements OnInit {
   uploadFile(): void {
     if(this.fileToUpload==null)
     {
-      alert("Please select file to upload");
+      this.toastr.error("Please select file to upload");
     }
     this.readAndUploadFile();
   }
@@ -77,13 +79,12 @@ export class FileUploadComponent implements OnInit {
             mailAttach.AttachmentId = resp;
             mailAttach.Attachment = file.FileName;
             mailAttach.MailId =this.uploadService.uploadKey;
-            this.messages = "Upload complete";
             this.show=false;
             this.onFileUploadSuccess.emit(mailAttach);
            },
            err =>
            {
-            alert("Failed to upload file., try again");
+            this.toastr.error("Failed to upload file., try again");
            }
           );
     }

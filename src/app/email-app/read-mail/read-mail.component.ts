@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MailAttachment } from 'src/app/models/mail-attachment.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-read-mail',
@@ -18,9 +19,12 @@ export class ReadMailComponent implements OnInit {
 
   public id = 0;
   public mailMessage: MailMessage;
-  constructor(private location: Location,private route: ActivatedRoute,private router: Router,private mailService: MailService,private utils: Utils) {
-    //this.loadMail();
-  }
+  constructor(
+    private location: Location,private route: ActivatedRoute,private router: Router,
+    private mailService: MailService,private utils: Utils,private toastr: ToastrService
+    ) {
+      //this.loadMail();
+      }
 
   ngOnInit() {
     this.mailMessage = new MailMessage();
@@ -48,14 +52,8 @@ export class ReadMailComponent implements OnInit {
             this.mailMessage = data;
             this.seReadStatus();
       },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          //A client-side or network error occurred.
-          alert('An error occurred: ' + err.error.message);
-        }
-        else {
-            alert(err.status+' Server error occured, try again after some time.');
-        }
+      err => {
+        this.toastr.error(err.message);
         this.location.back();
       }
     );
