@@ -151,7 +151,7 @@ onSubmit()
       .subscribe(
         data => {
               this.mailResp =data;
-              this.clearControls();
+              this.location.back();
               this.toastr.success('Mail sent successfully.');
         }
       );
